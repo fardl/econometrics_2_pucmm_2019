@@ -1,0 +1,650 @@
+---
+title: "Clase 1:"
+subtitle: ""
+author: "Francisco A. Ramírez"
+date: "Septiembre, 2019"
+
+output:
+  beamer_presentation:
+    theme: "metropolis"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Contenido
+
+1. Introducción
+
+2. Métodos de Estimación en Econometría
+    
+     - Introducción
+     
+     - Máxima Verosimilitud
+     
+     - Método Generalizado de Momentos
+
+
+# Introducción
+
+
+## Introducción
+
+- Economistas están interesados en estudiar relaciones causales entre variables económicas.
+
+- Usualmente contrastar predicciones de la teoría sobre un fenómeno de interés. 
+
+    + Por ejemplo: 
+        
+         - incrementos de la TPM reducen crecimiento económico en el CP?
+         
+         - existe convergencia de las taas de crecimiento de las economías?
+         
+         - mayor escolaridad incrementa los salarios de los individuos?
+         
+## Introducción
+
+- ... o indagar respuestas a preguntas provenientes de las discusiones de política.
+
+     + Por ejemplo:
+     
+          - mejora el desempeño de los estudiantes cuando se reduce el número de estudiantes en el aula.
+          
+          - los hospitales hacen a las personas más saludables?
+          
+          - aumentan la asistencia escolar la implementacion de jornadas de desparacitación.
+          
+          - las computadoras en el aula mejoran el desempeño de los estudiantes?
+          
+## Introducción
+
+- La realidad impone su complejidad, dificultando la observación directa del fenómeno de interés.
+
+- Esto requiere que el economista reuna evidencia a partir de la observación del fenómeno de interés, es decir, de los datos.
+
+- La aplicación del método científico obliga a pensar sobre el diseño de la investigación, la cual se configura al responder las siguientes preguntas:
+
+
+    +  Cual es la relacion causal de interes?
+    
+    +  Cual es el experimento que captura la relacion causal de interes?
+    
+    +  Cual es la estrategia de identificación?
+    
+    +  Cual es el proceso de inferencia que se va a seguir?
+    
+## Introducción
+
+- Pensar en estas preguntas y sus respuestas es importante, porque de eso depende la credibilidad de los resultados de la investigación.
+
+
+- El tipo de información o datos que se dispone para estudiar una relacion causal puede ser:
+
+    + Datos experiementales 
+    
+    + Datos cuasi - experimentales
+    
+    + Datos observacionales
+
+
+
+
+## Introducción
+
+- El mundo ideal sería un donde dada la relacion causal de interes se pudiese implementar un *experimento controlado* que permita aislar el efecto buscado.
+
+
+- Para ilustrar este punto considere el siguiente ejemplo sobre la pregunta:  *¿Son más saludables las personas con seguro de salud?*. La siguiente tabla muestra el promedio de un índice de salud (HI) y las caracteristicas de las personas en la encuesta.
+
+
+## Introducción
+
+
+```{r echo=FALSE,fig.cap="",fig.align='default',out.width='80%'}
+
+knitr::include_graphics('HI.jpeg')
+```
+
+## Introducción
+
+- Si pudiesemos hacer un experimento contralado o propiamente un RCT, la comparación se haría a partir de grupos de indiviudos comparables entre si. La "randomizacion" es el "gold standard" en el mundo cientifico.
+
+
+- Sin embargo este tipo de experimento es relativamente costoso (aunque se ha hecho un esfuerzo por reducir su costo relativo) y está sometido ha criticas sobre la denominada "validez externa" de los resultados que se derivan de estos.
+
+- Los economistas han buscado otras vias de obtener datos con las mismas condiciones de un experimento controlado, tales como los "experiemntos naturales", no obstante no estar disponibles con la frecuencia deseada.
+
+## Introducción
+
+- Otras estrategias han sido elaboradas, y su uso está asociado a la pregunta relativa a la estrategia de identificacion del efecto causal de interes.
+
+- En este curso analizaremos algunas de estas estrategias.
+
+- Discutiremos metodos econometricos desarrollados para distintos tipos de datos: 
+
+    + corte transversal
+    
+    + series de tiempo
+    
+    + datos de panel
+    
+
+
+## Introducción
+
+- En particular, los tópicos a estudiar son:
+
+    + Métodos de estimación
+        
+        - Máxima Verosimilitud
+        
+        - Método Generalizado de Momentos
+    
+## Introducción
+
+- Corte Transversal
+    
+    - Variables Instrumentales
+        
+    - Modelos de Elección Discreta
+        
+         Elección binaria
+           
+         Multinomiales
+         
+         Variables de conteo
+         
+    - Variable dependiente limitada
+        
+         Modelos Tobit
+          
+         Modelos de selección
+          
+         Diseño de regresiones discontinuas
+          
+         Propensity Score Matching
+         
+         
+## Introducción
+
+- Series de tiempo
+
+  - Modelos Univariados de Series de Tiempo
+    
+    Estacionariedad y Función de Autocorrelación.
+    
+    Procesos ARMA
+    
+    Raices unitarias
+    
+    Estimación y diagnóstico de modelos ARMA
+    
+    Pronósticos usando modelos ARMA
+    
+  - Modelos Multivariados de Series de Tiempo
+
+     Modelos dinámicos con variables estacionarias      
+     
+     Modelos dinámicos con variables no estacionarias: Coitegración y Corrección de errores.
+     
+     Vectores Autorregresivos
+     
+     Cointegración: El caso multivariado
+     
+     
+## Introducción
+
+- Datos de panel
+
+   Modelos estáticos
+   
+   Modelos dinámicos
+   
+   Panel de series de tiempo
+      
+        
+## Introducción: Evaluación
+
+Evaluación|Fecha|% Calificación | Material a Evaluar
+-----|----|----- |----------------
+Control 1  |10/09|5% | MHE(Caps. 1 y 2); MM(Cap. 1); Angrist y Pischke (2010) ; Carter et.al. (2017).
+Control 2  |17/09|5% | Angrist (1990)
+Prueba I   |08/10|20%| MV, GMM, VI, Elección Discreta y VDL.
+Prueba II  |05/11|20%| ST univariadas y multivariadas
+Prueba III |03/12|20%| Datos de Panel
+Trabajo    |03/12|30%| Proyecto de Investigación
+
+
+# Métodos de Estimación en Economía
+
+## Métodos de Estimación en Econometría
+
+- En el curso de Econometría I estudiaron el método de MCO como estrategia de estimación de los parámetros del modelo de regresión lineal. 
+
+- Esta estrategia de estimación está enmarcada en un tipo de estrategia de estimación en econometría. Existen tres tipos:
+
+    - Parametrica
+    
+    - Semiparametrica 
+    
+    - No parametrica
+    
+## Métodos Paramétricos
+
+- Suponen una parametrización explícita de la densidad o modelo de probabilidad del mecanismo que genera los datos (DGP).
+
+
+- Por ejemplo, dada una variable escalar $y_i$ y un vector aleatorio $\mathbf{x}$, el modelo parametrizado es especificado como:
+
+$$f(y,\mathbf{x})=g(y|\mathbf{x},\mathbf{\beta})\times h(\mathbf{x},\theta)$$
+
+donde $\beta$ y $\theta$ son parámetros desconocidos.
+
+- Respecto al caso de MCO, se tiene que la densidad condicional es,
+
+$$y_i|\mathbf{x} \sim N(\mathbf{x}'\beta,\sigma^2)$$
+
+donde lo único desconocido son los parámetros.
+
+## Métodos parámetricos
+
+- Esta parametrización se basa en un supuestos sobre la distribución de los datos. 
+
+- El rasgo principal de esta metodología de estimación son las especificaciones de la densidad y las características de esa densidad.
+
+- El espacio de parámetros es el conjunto de valores admisibles que satisfacen una especificación predefinida del modelo. 
+
+- Estimación en este caso consiste en seleccionar un criterio de selección de parámetros que optimice tal criterio.
+
+- Ejemplos: MCO, MV.
+
+
+
+## Métodos semi paramétricos
+
+- Admiten menos supuestos que la estimación paramétrica.
+
+
+- En general, el supuesto sobre el tipo de distribución es eliminado.
+
+- El estimador resultante se deriva de ciertas características de la población.
+
+
+- Ejemplos: es el estimador generalizado de momentos, máxima verosimilitud empírica, estimación por mínimas desviaciones absolutas, regresión por cuantiles.
+
+
+## Métodos no paramétricos
+
+- Eliminan todos los supuestos sobre la forma funcional del modelos y sobre la distribución de los errores.
+
+- El beneficio es que se obtienen estimadores extremadamente robustos.
+
+
+- Ejemplo. Estimaciones por densidades de Kernel.
+
+
+## Máxima Verosimilitud
+
+
+- Si la distribución de una variables $y_i$ condicional a un número de variables $x_i$ es conocida y depende de parámetros desconocidos, estos pueden ser estimados eligiendolos tal que la distribucion estimada sea lo mas parecida a la que corresponde a los datos.
+
+- Este es el denominado método de máxima verosimilitud
+
+- El supuesto de partida es que la distribucion de un fenomeno observado es conocida (la variable endogena) excepto sus parametros.
+
+- Estos parametros son el objeto de estimacion.
+
+## Ejemplos
+
+- Considere una piscina de pelotas rojas y amarillas.
+
+- Suponga que tenemos interes en una fraccion $p$ de pelotas rojas ($0<p<1$).
+
+- Para obtener información sobre $p$ tomamos una muestra aleatoria (con reemplazo) de N pelotas, tal que:
+
+$N_1=\sum_iy_i$: es el numero de rojas en la muestra.
+
+$N - N_1$: número de amarillas
+
+- Sea $y_i=1$ si la pelota es roja y $y_i=0$ si no.
+
+- Sabemos que: $P{y_i=1}=p$.
+
+## MV
+
+- La probabilidad de obtener esta muestra es:
+
+$$P\{N_1~bolas~rojas,N-N_1~bolas~amarillas\}=p^{N_1}(1-p)^{N-N_1}$$
+
+- Esta expresión se conoce como **función de verosimilitud**.
+
+- La estimacion por MV requiere elegir $p$ tal que la FV sea máxima.
+
+- Esto da el estimador de MV $\hat{p}$.
+
+- Usualmente se presenta en terminos logaritmicos:
+
+$$\log{L(p)}=N_1\log{(p)}+(N-N_1)\log{(1-p)}$$
+
+## MV 
+
+- Graficamente:
+
+```{r}
+N=100
+N1=44
+p = seq(0,100)/100
+llp = N1*log(p)+(N-N1)*log(1-p)
+plot(p,llp,type="l")
+```
+
+
+
+## MV
+
+- Analíticamente, maximizando respecto a $p$, se obtienen la condición de primer orden:
+
+$$\frac{d\log{L(p)}}{dp}=\frac{N_1}{p}-\frac{N-N_1}{1-p}=0$$
+
+- resolviendo para $p$, da el estimador de máxima verosimilitud
+
+$$\hat{p}=N_1/N$$
+
+
+
+## MV
+
+- Para asegurarnos de que es un máximo, las condiciones de segundo orden son:
+
+$$\frac{d^2\log{L(p)}}{dp^2}=-\frac{N_1}{p}-\frac{N_1-N}{(1-p)^2}<0$$
+
+- Esto muestra que es un máximo.
+
+## MV
+
+- Otra aplicación de MV es con el modelo de regresión lineal. Por ejemplo, considere el MRLS:
+
+$$y_i=\beta_1+\beta_2x_i+\varepsilon_i$$
+
+- con los supuestos conocidos para $\varepsilon_i$: tiene media cero, es homocedástico, no tiene autocorrelación y es independiente de todas las $x_i$.
+
+- Para estimar por MV los paramétros de este modelo se agrega el supuesto que el error se distribuye como una normal. En resumen
+
+$$\varepsilon_i\sim NID(0,\sigma^2)$$ 
+
+## MV 
+
+
+- Por tanto, la distribución de la observación $y_i$ es:
+
+$$f(y_i|x_i;\beta,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\{-\frac{1}{2}\frac{(y_i-\beta_1-\beta_2x_i)^2}{\sigma^2}\}$$
+
+- Dado el supuesto de independencia de las observaciones, la distribucion conjunta de $y_1,...,y_N$ (condicional enn $X=(x_1,...,x_N)'$) está dada por:
+
+$$f(y_1,...,y_N|X;\beta,\sigma^2)=\Pi_{i=1}^Nf(y_i|x_i;\beta,\sigma^2)=\Big(\frac{1}{\sqrt{2\pi\sigma^2}}\Big)^N \Pi_{i=1}^N \exp\{-\frac{1}{2}\frac{(y_i-\beta_1-\beta_2x_i)^2}{\sigma^2}\}$$
+
+
+- La función de verosimilitud es idéntica a la distribucion conjuta, pero es considerada comouna funcion de los parametros $\beta,\sigma^2$.
+
+## MV
+
+- La log Verosimilitud es:
+
+$$\log{L(\beta,\sigma^2)}=-\frac{1}{2}\log{(2\pi\sigma^2)}-\frac{1}{2}\sum_{i=1}^N\frac{(y_i-\beta_1-\beta_2x_i)^2}{\sigma^2}$$
+
+
+- Las condiciones de primer orden son:
+
+$$\frac{d\log{L(\beta,\sigma^2)}}{d\beta_1}=0 \rightarrow~~ \sum_{i=1}^N(y_i-\hat{\beta_1}-\hat{\beta_2}x_i)=0$$
+
+$$\frac{d\log{L(\beta,\sigma^2)}}{d\beta_2}=0 \rightarrow~~ \sum_{i=1}^N(y_i-\hat{\beta_1}-\hat{\beta_2}x_i)x_i=0$$
+
+
+- Despejando se revela que son iguales a los estimados de MCO!!
+
+## MV
+
+- Las CPO para el caso de $\sigma^2$ es:
+
+$$-\frac{N}{2}\frac{1}{\sigma^2}+\frac{1}{2}\sum_{i=1}^N\frac{e_i^2}{\sigma^4}=0$$
+
+- donde $e_i=y_i-\beta_1-\beta_2x_i$
+
+- Resolviendo para $\sigma^2$, se obtiene el estimador de MV de $\sigma^2$:
+
+
+$$\hat{\sigma}^2=\frac{1}{N}\sum_{i=1}^Ne_i^2$$
+
+- Este es un estimador consisrente para $\sigma^2$, pero es un estimador sesgado. El estimador insesgado ya lo conocemos cuando lo derivaron en el contexto de MCO:
+
+$$s^2==\frac{1}{N-K}\sum_{i=1}^Ne_i^2$$
+
+- donde K es el numero de regresores (incluyendo el intercepto).
+
+
+## MV - Propiedades generales del estimador de MV:
+
+- Suponga estamos interesados en la distribucion condicional de $y_i$ dado $x_i$. Es decir, en:
+
+$$f(y_i|x_i;\theta)$$
+
+- donde $\theta$ es K dimensional.
+
+- Bajo el supuesto de independencia de las observaciones, la distribucion conjunta es:
+
+$$f(y_1,...,y_n|X;\theta)=\Pi_{i=1}^Nf(y_i|x_i;\theta)$$
+
+
+- La FV es:
+
+$$L(\theta|y,X)=\Pi_{i=1}^NL_i(\theta|y_i,x_i)=\Pi_{i=1}^Nf(y_i|x_i;\theta)$$
+
+
+
+- que es una función de $\theta$.
+
+## MV - Propiedades generales del estimador de MV:
+
+- El estimador de MV $\hat{\theta}$ para $\theta$ es solución para:
+
+$$\max_\theta{\log{L(\theta)}}=\max_\theta{\sum_{i=1}^N\log{L_i(\theta)}}$$
+
+- Las condiciones de primer orden son:
+
+$$\frac{\partial\log{L(\theta)}}{\partial \theta}\rvert_{\hat{\theta}} = \sum^N_{i=1}\frac{\partial\log{L_i(\theta)}}{\partial\theta}\rvert_{\hat{\theta}}=0$$
+
+
+- Si la FV es concava, existe un máximo global y el estimador de MV es uni-determinado por las CPO.
+
+- Salvo excepciones, para determinar el estimador de MV se requiere el uso de métodos numéricos.
+
+## MV
+
+- Se define el vector de *scores* como
+
+$$s(\theta)\equiv\frac{\partial\log{L(\theta)}}{\partial \theta} = \sum^N_{i=1}\frac{\partial\log{L_i(\theta)}}{\partial \theta} \equiv \sum_{i=1}^Ns_i(\theta)$$
+
+- Evaluado en $\hat{\theta}$,
+
+$$s(\hat{\theta})=\sum_{i=1}^Ns_i(\hat{\theta})=0$$
+
+## MV 
+
+- Provisto que la FV está correctamente especificada, el estimador de MV conserva las siguientes propieades:
+
+1. Es un estimador **consistente** de $\theta$: $plim~{\hat{\theta}}=\theta$
+
+2. Es un estimadro **asintóticamente eficiente**. 
+
+3. Es un estimador que se **distribuye asintóticamente normal**, de acuerdo a 
+
+$$\sqrt{N}(\hat{\theta}-\theta) \rightarrow N(0,V)$$
+donde V es la matriz de covarianza asintótica.
+
+## MV
+
+
+- La matriz V es determinada por la forma de log de la funcion de verosimilitud.
+
+- Definase la informacion en la observación $i$ como:
+
+$$I_i(\theta) \equiv -E \{\frac{\partial^2\log{L_i(\theta)}}{\partial\theta\partial\theta'}\}$$
+
+La cual es una matrix $K\times K$. Representa cantidad esperada de informacion acerca de $\theta$ contenida en la observación $i$.
+
+
+## MV
+
+- Promediando este indicador sobre todas las observaciones, se obtiene la **matriz de informacion**:
+
+$$\bar{I}_N(\theta)\equiv \frac{1}{N}\sum_{i=1}^N I_i(\theta)= -E \{\frac{1}{N}\frac{\partial^2\log{L(\theta)}}{\partial\theta\partial\theta'}\}$$
+
+
+
+- Si las observaciones están distribuidas de manera independientes: $I_i(\theta)=\bar{I}_N(\theta)=I(\theta)$.
+
+
+## MV
+
+- La matriz de covarianzas es:
+
+$$V=I(\theta)^{-1}$$
+
+- Note que si la log verosimitud es bien curva alrededor del maximo, la segunda derivada será grande y la varianza será pequeña, implicando que el estimadorde MV es muy preciso.
+
+- $I(\theta)^{-1}$ provee un umbral inferior para la matriz de covarianzas asintotica. Este umbral se conoce como **Cota Inferior Cramer-Rao**
+
+
+## MV: Ejemplos
+
+- Retomando nuestro ejemplo de la piscina de pelotas, la contribucion de la observacion $i$ a la log verosimilitud:
+
+
+$$\log{L_i(p)}=y_i\log(p)+(1-y_i)\log(1-p)$$
+
+- Con una primera derivada
+
+$$\frac{\partial\log{L_i(p)}}{\partial p}=\frac{y_i}{p}-\frac{1-y_i}{1-p}$$
+
+- El negativo de la segunda derivada es:
+
+$$-\frac{\partial ^2\log{L_i(p)}}{\partial p^2}=\frac{y_i}{p^2}-\frac{1-y_i}{(1-p)^2}$$
+
+## MV
+
+- Cuyo valor esperado es:
+
+$$E\{-\frac{\partial ^2\log{L_i(p)}}{\partial p^2}\}=\frac{E(y_i)}{p^2}-\frac{1-E(y_i)}{(1-p)^2}=\frac{1}{p}+\frac{1}{1-p}=\frac{1}{p(1-p)}$$
+
+- Entonces:
+
+$$V = p(1-p)$$
+
+- Por lo tanto la distribucion asintotica de $\hat{p}$ es:
+
+$$\sqrt{N}(\hat{p}-p) \rightarrow ~N(0.p-(1-p))$$.
+
+##MV
+
+- Tarea, haga lo mismo con el MRL.
+
+## MV: Test de especificación
+
+- Sobre la base del estimado de MV, un numero de contrastes se puede construir.
+
+- Considere de nuevo el problema de estimar el vector $\theta$ a traves de maximizar:
+
+$$\max_\theta{\log{L(\theta)}}=\max_\theta{\sum_{i=1}^N\log{L_i(\theta)}}$$
+
+- Si queremos contrastar una o mas restricciones lineales sobre el vector de parametros, la podemos resumir en:
+
+$$H_0:R\theta=q$$
+
+- donde $R$ es una matriz de $J\times K$, donde las J filas son linealmente independientes.
+
+## MV: Test de especificación
+
+- Los tres principales contrastes se pueden resumir como sigue:
+
+
+- **Contraste de Wald**: Estime $\theta$ por MV y revise si la diferencia $R\hat{\theta}-q$ es cercana a cero, usando la matriz de convarianza (asintótica).
+
+- El punto de partida es:
+
+$$\sqrt{N}(\hat{\theta}-\theta)~\rightarrow ~ N(0,V)$$
+
+- De donde sabemos que la transformacion lineal tiene distribucion:
+
+
+$$\sqrt{N}(R\hat{\theta}-R\theta)~\rightarrow ~ N(0,RVR')$$
+
+- Bajo la nula, $R\theta=q$, el estadistico de Wald es:
+
+
+$$\xi_W=N(R\hat{\theta}-q)'[R\hat{V}R']^{-1}(R\hat{\theta}-q)$$
+
+
+- $\hat{V}$ es el estimador para V. La distribución del contraste es Chi cuadara con J grados de libertad.
+
+## MV: Test de especificación
+
+
+- **Contraste de Razón de Verosimilitud**: Estime dos veces el modelo - uno sin la restricción (que genera $\hat{\theta}$) y uno con la hipotesis nula impuesta (que da $\tilde{\theta}$) y revise si la diferencia de los valores de la log verosimilitud, $\log{L(\hat{\theta})}-\log{L(\tilde{\theta})}$ es estadisticamente distinta de cero.
+
+El estadistico LR es computado como:
+
+$$\xi_{LR}=2[\log{L(\hat{\theta})}-\log{L(\tilde{\theta})}]$$
+
+- Se distribuye Chi cuadrado con J grados de libertad.
+
+- Es un test apropiado para modelos que estan anidados.
+
+
+## MV: Test de especificación
+
+- **Multiplicador de Lagrange**: Estime el modelo con la restriccion sugeridad por la hipotesis nula (que da $\tilde{\theta}$) y revise si las CPO del modelo general son significativemente violadas, es decir, si $\partial L(\theta)/\partial \theta$ es diferente de cero.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+
+
+
+
